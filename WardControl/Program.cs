@@ -37,14 +37,16 @@ namespace WardControl
                 {
                     inven[index] = false;
                     bdispen[index] = false;
+                    dispen[index] = 0;
+                    continue;
                 }
-                List<Item> wards = enemy.Inventory.Items.Where(x => x.Name == "item_ward_sentry" || x.Name == "item_ward_observer" || x.Name=="item_ward_dispenser").ToList();
+                List<Item> wards = enemy.Inventory.Items.Where(x => x.Name == "item_ward_sentry" || x.Name == "item_ward_observer" || x.Name == "item_ward_dispenser").ToList();
                 if (wards.Any())
                 {
                     inven[index] = true;
                     foreach (Item ward in wards)
                     {
-                        if (ward.Name=="item_ward_dispenser")
+                        if (ward.Name == "item_ward_dispenser")
                         {
                             bdispen[index] = true;
                             String sdispen = ward.CurrentCharges.ToString();
@@ -53,7 +55,7 @@ namespace WardControl
                             dispen[index] = Convert.ToInt16(sdispen);
                         }
                         else if (ward.AbilityState.Equals(AbilityState.OnCooldown))
-                            eksekusi(enemy,ward.Name.Replace("item_ward_", ""));
+                            eksekusi(enemy, ward.Name.Replace("item_ward_", ""));
                         else if (bdispen[index])
                         {
                             eksekusi(enemy, "dispenser");
@@ -76,12 +78,11 @@ namespace WardControl
         {
             if (!Game.IsInGame)
                 return;
-            Hero me = ObjectMgr.LocalHero;
             Vector2 ScreenPos;
             if (adaward)
             {
-                Drawing.WorldToScreen(Position, out ScreenPos);  
-                if (namaward=="sentry")
+                Drawing.WorldToScreen(Position, out ScreenPos);
+                if (namaward == "sentry")
                     Drawing.DrawRect(ScreenPos, Size, Drawing.GetTexture("materials/ensage_ui/items/ward_sentry.vmat"));
                 if (namaward == "observer")
                     Drawing.DrawRect(ScreenPos, Size, Drawing.GetTexture("materials/ensage_ui/items/ward_observer.vmat"));
@@ -89,10 +90,10 @@ namespace WardControl
                     Drawing.DrawRect(ScreenPos, Size, Drawing.GetTexture("materials/ensage_ui/items/ward_dispenser.vmat"));
             }
         }
-        public static void eksekusi(Hero enemy,String wardname)
+        public static void eksekusi(Hero enemy, String wardname)
         {
             namaward = wardname;
-            Game.ExecuteCommand("say_team " + enemy.Name.Replace("npc_dota_hero_", "").Replace("_"," "));
+            Game.ExecuteCommand("say_team " + enemy.Name.Replace("npc_dota_hero_", "").Replace("_", " "));
             Game.ExecuteCommand("chatwheel_say 57");
             Position = enemy.Position;
             adaward = true;
