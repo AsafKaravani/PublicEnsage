@@ -115,8 +115,8 @@ namespace WardControl
         public static void eksekusi(Hero enemy, String wardname)
         {
             namaward = wardname;
-            Game.ExecuteCommand("say_team " + enemy.Name.Replace("npc_dota_hero_", "").Replace("_", " "));
-            Game.ExecuteCommand("chatwheel_say 57");
+        //    Game.ExecuteCommand("say_team " + enemy.Name.Replace("npc_dota_hero_", "").Replace("_", " "));
+        //    Game.ExecuteCommand("chatwheel_say 57");
             Position = enemy.Position;
             adaward = true;
         }
