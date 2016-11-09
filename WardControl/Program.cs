@@ -46,7 +46,7 @@ namespace WardControl
                     dispen[index] = 0;
                     dispen2[index] = 0;
                     continue;
-                    sandak is the king!!!
+                   //sandak is the king!!!
                 }
                 else if (!enemy.IsVisible)
                     continue;
